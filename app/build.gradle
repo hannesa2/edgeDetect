@@ -82,6 +82,7 @@ android {
             versionNameSuffix ".debug"
         }
     }
+    namespace 'info.hannes.edgedetection.demo'
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->

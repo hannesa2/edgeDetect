@@ -22,6 +22,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'info.hannes.edgedetection'
 }
 
 dependencies {
