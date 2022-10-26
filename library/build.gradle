@@ -37,7 +37,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.9.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.itextpdf:itext7-core:7.2.3'
+    implementation 'com.itextpdf:itext7-core:7.2.4'
 }
 
 project.afterEvaluate {
