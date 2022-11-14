@@ -19,6 +19,7 @@ android {
         versionCode getGitCommitCount()
         versionName getTag()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments useTestStorageService: 'true'
         buildConfigField "String", 'GIT_REPOSITORY', "\"" + getGitOriginRemote() + "\""
     }
 
@@ -107,11 +108,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'com.github.AppDevNext:Moka:1.5'
-    androidTestImplementation "androidx.test.ext:junit:1.1.4"
-    androidTestImplementation 'androidx.test:runner:1.5.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0'
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.4"
+    androidTestUtil "androidx.test.services:test-services:1.4.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
+
     implementation project(':library')
     implementation 'com.github.AppDevNext.Logcat:LogcatCoreUI:2.11.3'
     implementation 'com.github.AppDevNext.Logcat:LogcatCrashlyticLib:2.11.3'
@@ -157,48 +157,6 @@ task decryptPrivate {
 
         def processDecrypt = "$projectDir/../signing/decrypt.sh".execute()
         processDecrypt.waitForProcessOutput(System.out, System.err)
-    }
-}
-
-def adbDirectory = '/storage/emulated/0/Download' // api 28
-//def adbDirectory = '/storage/self/primary/Download' // api 21
-def reportsDirectory = "$projectDir/../screenshots/adb"
-
-def clearScreenshotsTask = task('clearScreenshots', type: Exec) {
-    println "clearScreenshotsTask"
-    executable "${android.getAdbExe().toString()}"
-    args 'shell', 'rm', '-r', adbDirectory
-}
-
-def createScreenshotDirectoryTask = task('createScreenshotDirectory', type: Exec, group: 'reporting') {
-    println "createScreenshotDirectoryTask"
-    executable "${android.getAdbExe().toString()}"
-    args 'shell', 'mkdir', '-p', adbDirectory
-}
-
-def fetchScreenshotsTask = task('fetchScreenshots', type: Exec, group: 'reporting') {
-    println "fetchScreenshotsTask"
-    executable "${android.getAdbExe().toString()}"
-    args 'pull', adbDirectory + '/.', reportsDirectory
-
-    dependsOn {
-        createScreenshotDirectoryTask
-    }
-
-    doFirst {
-        new File(reportsDirectory).mkdirs()
-    }
-}
-
-tasks.whenTaskAdded { task ->
-    if (task.name == 'connectedDebugAndroidTest') {
-        task.mustRunAfter {
-            clearScreenshotsTask
-            createScreenshotDirectoryTask
-        }
-        task.finalizedBy {
-            fetchScreenshotsTask
-        }
     }
 }
 
