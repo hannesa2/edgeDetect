@@ -6,6 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.screenshot.captureToBitmap
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import info.hannes.logcat.ui.BothLogActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestName
@@ -15,7 +16,7 @@ import org.junit.runner.RunWith
 class LogSmokeTest {
 
     @get:Rule
-    val activityScenarioRule = activityScenarioRule<StartActivity>()
+    val activityScenarioRule = activityScenarioRule<BothLogActivity>()
 
     // a handy JUnit rule that stores the method name, so it can be used to generate unique screenshot files per test method
     @get:Rule
@@ -23,9 +24,11 @@ class LogSmokeTest {
 
     @Test
     fun smokeTestSimplyStart() {
-        Thread.sleep(4000)
-        Espresso.onView(ViewMatchers.isRoot())
-            .captureToBitmap()
-            .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}")
+        for (i in 500L..2000L step 500) {
+            Thread.sleep(i)
+            Espresso.onView(ViewMatchers.isRoot())
+                .captureToBitmap()
+                .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-$i")
+        }
     }
 }

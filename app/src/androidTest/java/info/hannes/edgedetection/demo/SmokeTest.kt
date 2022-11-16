@@ -1,5 +1,7 @@
 package info.hannes.edgedetection.demo
 
+import android.util.Log
+import androidx.test.core.app.takeScreenshot
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.matcher.ViewMatchers
@@ -15,7 +17,7 @@ import org.junit.runner.RunWith
 class SmokeTest {
 
     @get:Rule
-    val activityScenarioRule = activityScenarioRule<StartActivity>()
+    val activityScenarioRule = activityScenarioRule<PreviewActivity>()
 
     // a handy JUnit rule that stores the method name, so it can be used to generate unique screenshot files per test method
     @get:Rule
@@ -23,11 +25,17 @@ class SmokeTest {
 
     @Test
     fun smokeTestSimplyStart() {
-        for (i in 1000L..5000L step 500) {
+        for (i in 3000L..5000L step 1000) {
             Thread.sleep(i)
-            Espresso.onView(ViewMatchers.isRoot())
-                .captureToBitmap()
-                .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-$i")
+            takeScreenshot()
+                .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-S$i")
+            try {
+                Espresso.onView(ViewMatchers.isRoot())
+                    .captureToBitmap()
+                    .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-A$i")
+            } catch (e: Exception) {
+                Log.e("smokeTestSimplyStart", e.message.toString())
+            }
         }
     }
 }
