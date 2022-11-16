@@ -1,6 +1,5 @@
 package info.hannes.edgedetection.demo
 
-import android.Manifest
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.matcher.ViewMatchers
