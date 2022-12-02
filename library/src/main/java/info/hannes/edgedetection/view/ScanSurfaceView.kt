@@ -21,14 +21,18 @@ import org.opencv.core.Point
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import timber.log.Timber
-import java.io.IOException
 import kotlin.math.abs
 
 
 /**
  * This class previews the live images from the camera
  */
-class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE) : FrameLayout(context), SurfaceHolder.Callback {
+class ScanSurfaceView(
+    context: Context,
+    iScanner: IScanner,
+    val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE,
+    private val errorCallback: ((Exception) -> Unit)? = null
+) : FrameLayout(context), SurfaceHolder.Callback {
 
     private var surfaceView: SurfaceView = SurfaceView(context)
     private val scanCanvasView: ScanCanvasView
@@ -56,7 +60,8 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
             requestLayout()
             openCamera()
             camera!!.setPreviewDisplay(holder)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
+            errorCallback?.invoke(e)
             Timber.e(e)
         }
     }
@@ -157,6 +162,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
                     showFindingReceiptHint()
                 }
             } catch (e: Exception) {
+                errorCallback?.invoke(e)
                 Timber.e(e)
                 showFindingReceiptHint()
             }
@@ -192,8 +198,10 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
         val bottomWidth = points[2].y - points[1].y
         if (bottomWidth > resultWidth) resultWidth = bottomWidth
         Timber.v("resultWidth=$resultWidth resultHeight=$resultHeight")
-        val imgDetectionPropsObj = ImageDetectionProperties(previewWidth.toDouble(), previewHeight.toDouble(), resultWidth, resultHeight,
-                previewArea.toDouble(), area, points[0], points[1], points[2], points[3])
+        val imgDetectionPropsObj = ImageDetectionProperties(
+            previewWidth.toDouble(), previewHeight.toDouble(), resultWidth, resultHeight,
+            previewArea.toDouble(), area, points[0], points[1], points[2], points[3]
+        )
         val scanHint: ScanHint
         if (imgDetectionPropsObj.isDetectedAreaBeyondLimits) {
             scanHint = ScanHint.FIND_RECT
@@ -268,6 +276,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
                 // iScanner.displayHint(ScanHint.NO_MESSAGE);
                 // clearAndInvalidateCanvas();
             } catch (e: Exception) {
+                errorCallback?.invoke(e)
                 Timber.e(e)
             }
         }
