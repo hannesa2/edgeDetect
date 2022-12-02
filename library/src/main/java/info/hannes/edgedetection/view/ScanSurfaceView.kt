@@ -38,14 +38,18 @@ import org.opencv.core.Point
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import timber.log.Timber
-import java.io.IOException
 import kotlin.math.abs
 
 
 /**
  * This class previews the live images from the camera
  */
-class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE) : FrameLayout(context),
+class ScanSurfaceView(
+    context: Context,
+    iScanner: IScanner,
+    val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE,
+    private val errorCallback: ((Exception) -> Unit)? = null
+) : FrameLayout(context),
     SurfaceHolder.Callback {
 
     private var surfaceView: SurfaceView = SurfaceView(context)
@@ -74,7 +78,8 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
             requestLayout()
             openCamera()
             camera!!.setPreviewDisplay(holder)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
+            errorCallback?.invoke(e)
             Timber.e(e)
         }
     }
@@ -174,6 +179,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
                     showFindingReceiptHint()
                 }
             } catch (e: Exception) {
+                errorCallback?.invoke(e)
                 Timber.e(e)
                 showFindingReceiptHint()
             }
@@ -294,6 +300,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
                 // iScanner.displayHint(ScanHint.NO_MESSAGE);
                 // clearAndInvalidateCanvas();
             } catch (e: Exception) {
+                errorCallback?.invoke(e)
                 Timber.e(e)
             }
         }
