@@ -110,7 +110,7 @@ dependencies {
     implementation project(':library')
     implementation 'com.github.AppDevNext.Logcat:LogcatCoreUI:2.11.3'
     releaseImplementation 'com.github.AppDevNext.Logcat:LogcatCrashlyticLib:2.11.3'
-    implementation 'com.github.hannesa2:githubAppUpdate:1.6'
+    implementation 'com.github.hannesa2:githubAppUpdate:2.0'
 
     implementation "androidx.core:core-ktx:1.9.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
