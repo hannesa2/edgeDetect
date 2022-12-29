@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import info.hannes.liveedgedetection.demo.databinding.ActivityStartBinding
+import info.hannes.edgedetection.demo.databinding.ActivityStartBinding
 import info.hannes.logcat.ui.BothLogActivity
 
 class StartActivity : AppCompatActivity() {
@@ -19,8 +19,7 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityStartBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         binding.buttonScan.setOnClickListener { startActivity(Intent(this, PreviewActivity::class.java)) }
         binding.buttonLog.setOnClickListener { startActivity(Intent(this, BothLogActivity::class.java)) }

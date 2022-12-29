@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import info.hannes.edgedetection.*
-import info.hannes.liveedgedetection.databinding.ActivityScanBinding
+import info.hannes.edgedetection.databinding.ActivityScanBinding
 import info.hannes.edgedetection.utils.*
 import info.hannes.edgedetection.view.ScanSurfaceView
 import org.opencv.android.Utils
@@ -53,8 +53,7 @@ class ScanActivity : AppCompatActivity(), IScanner, View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         timeHoldStill = intent.getLongExtra(ScanConstants.TIME_HOLD_STILL, ScanSurfaceView.DEFAULT_TIME_POST_PICTURE)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

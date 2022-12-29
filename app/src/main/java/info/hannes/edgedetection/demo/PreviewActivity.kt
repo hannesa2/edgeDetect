@@ -17,7 +17,7 @@ import info.hannes.github.AppUpdateHelper
 import info.hannes.edgedetection.*
 import info.hannes.edgedetection.activity.ScanActivity
 import info.hannes.edgedetection.demo.databinding.ActivityPreviewBinding
-import info.hannes.liveedgedetection.utils.*
+import info.hannes.edgedetection.utils.*
 import timber.log.Timber
 import java.io.File
 
@@ -28,8 +28,7 @@ class PreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPreviewBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         startScan()
 
