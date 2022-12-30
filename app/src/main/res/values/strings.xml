@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Edge Detection Sample</string>
-    <string name="show_pdf">Show PDF</string>
-    <string name="rotate">Rotate</string>
+    <string name="app_name" translatable="false">Edge Detection Sample</string>
+    <string name="show_pdf" translatable="false">Show PDF</string>
+    <string name="rotate" translatable="false">Rotate</string>
 </resources>
