@@ -22,7 +22,5 @@ class DetectApplication : Application() {
         externalCacheDir?.let {
             Timber.plant(FileLoggingTree(it, this))
         }
-
-        Crashlytic.init(applicationContext.contentResolver)
     }
 }
