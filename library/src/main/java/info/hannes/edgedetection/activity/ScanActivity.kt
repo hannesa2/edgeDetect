@@ -32,6 +32,7 @@ import org.opencv.core.Point
 import org.opencv.imgproc.Imgproc
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
@@ -79,12 +80,16 @@ class ScanActivity : AppCompatActivity(), IScanner, View.OnClickListener {
             }
         } else {
             if (isCameraPermissionGranted) {
-                imageSurfaceView = ScanSurfaceView(this@ScanActivity, this, timeHoldStill)
+                imageSurfaceView = ScanSurfaceView(this@ScanActivity, this, timeHoldStill) { exception -> handleException(exception) }
                 binding.cameraPreview.addView(imageSurfaceView)
             } else {
                 isCameraPermissionGranted = true
             }
         }
+    }
+
+    private fun handleException(exception: Exception) {
+        Toast.makeText(this, "An Error occurred '${exception.message}'", Toast.LENGTH_LONG).show()
     }
 
     private fun checkExternalStoragePermissions() {
@@ -115,7 +120,7 @@ class ScanActivity : AppCompatActivity(), IScanner, View.OnClickListener {
     private fun onRequestCamera(grantResults: IntArray) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Handler(Looper.getMainLooper()).post {
-                imageSurfaceView = ScanSurfaceView(this@ScanActivity, this@ScanActivity, timeHoldStill)
+                imageSurfaceView = ScanSurfaceView(this@ScanActivity, this@ScanActivity, timeHoldStill) { exception -> handleException(exception) }
                 binding.cameraPreview.addView(imageSurfaceView)
             }
         } else {
