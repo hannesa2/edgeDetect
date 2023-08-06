@@ -40,10 +40,10 @@ dependencies {
     implementation 'com.itextpdf:itext7-core:8.0.1'
 }
 
-project.afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
+publishing {
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
                 from components.release
             }
         }
