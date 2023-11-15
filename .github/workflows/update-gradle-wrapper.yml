@@ -13,10 +13,9 @@ jobs:
       - name: Install JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
+          distribution: "adopt"
           java-version: 17
       - name: Update Gradle Wrapper
-        uses: gradle-update/update-gradle-wrapper-action@v1
+        uses: gradle-update/update-gradle-wrapper-action@v1.0.20
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
           set-distribution-checksum: false
