@@ -26,7 +26,10 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-
+    packagingOptions {
+        pickFirst 'META-INF/native-image/reflect-config.json'
+        pickFirst 'META-INF/native-image/resource-config.json'
+    }
     buildFeatures {
         viewBinding true
     }
@@ -45,7 +48,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.12.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.itextpdf:itext7-core:8.0.3'
+    implementation 'com.itextpdf:itext7-core:8.0.4'
 }
 
 publishing {
