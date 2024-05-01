@@ -10,11 +10,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 34
+    namespace 'info.hannes.edgedetection.demo'
 
     defaultConfig {
         applicationId "info.hannes.edgedetection.demo"
         minSdkVersion 21
+        compileSdk 34
         targetSdkVersion 34
         versionCode getGitCommitCount()
         versionName getTag()
@@ -91,7 +92,6 @@ android {
             versionNameSuffix ".debug"
         }
     }
-    namespace 'info.hannes.edgedetection.demo'
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->

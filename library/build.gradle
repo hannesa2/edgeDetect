@@ -5,10 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 34
+    namespace 'info.hannes.edgedetection'
 
     defaultConfig {
         minSdkVersion 21
+        compileSdk 34
         targetSdkVersion 34
     }
 
@@ -33,7 +34,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'info.hannes.edgedetection'
 }
 
 dependencies {
