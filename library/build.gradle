@@ -26,7 +26,10 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-
+    packagingOptions {
+        pickFirst 'META-INF/native-image/reflect-config.json'
+        pickFirst 'META-INF/native-image/resource-config.json'
+    }
     buildFeatures {
         viewBinding true
     }

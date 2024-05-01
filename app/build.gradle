@@ -108,6 +108,10 @@ android {
         }
     }
 
+    packagingOptions {
+        pickFirst 'META-INF/native-image/reflect-config.json'
+        pickFirst 'META-INF/native-image/resource-config.json'
+    }
 }
 
 dependencies {
