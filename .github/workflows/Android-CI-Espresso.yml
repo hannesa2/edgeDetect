@@ -5,12 +5,10 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - master
 
 jobs:
   buildTest:
-    name: Build & Test JDK ${{ matrix.java_version }}
+    name: Build & Test
     runs-on: self-hosted
     strategy:
       matrix:
@@ -65,7 +63,7 @@ jobs:
             app/build/outputs/androidTest-results/connected
   Check:
     name: Check
-    runs-on: self-hosted
+    runs-on: macOS-14
     strategy:
       matrix:
         java_version: [ 17 ]
