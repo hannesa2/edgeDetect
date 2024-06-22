@@ -45,7 +45,7 @@ jobs:
           api: 28
           tag: default
           abi: x86_64
-          cmdOptions: -noaudio -no-boot-anim -no-window -metrics-collection
+          cmdOptions: -noaudio -no-boot-anim -qt-hide-window -metrics-collection
         env:
           CRYPT_PASS: ${{ secrets.CRYPT_PASS }}
       - name: Archive Espresso results
