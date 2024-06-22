@@ -45,7 +45,7 @@ jobs:
           api: 33
           tag: google_apis
           abi: arm64-v8a
-          cmdOptions: -noaudio -no-boot-anim -no-window
+          cmdOptions: -noaudio -no-boot-anim -no-window -metrics-collection
         env:
           CRYPT_PASS: ${{ secrets.CRYPT_PASS }}
       - name: Archive Espresso results
