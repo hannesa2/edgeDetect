@@ -48,7 +48,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.itextpdf:itext7-core:9.0.0'
+    implementation 'com.itextpdf:itext7-core:9.1.0'
 }
 
 publishing {
