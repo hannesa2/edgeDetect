@@ -12,6 +12,6 @@ object Crashlytic {
     fun init(contentResolver: ContentResolver) {
         Timber.plant(CrashlyticsTree(Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)))
         FirebaseCrashlytics.getInstance().setCustomKey("VERSION_NAME", BuildConfig.VERSION_NAME)
-        FirebaseCrashlytics.getInstance().setCustomKey("OpenCV", org.opencv.BuildConfig.VERSION_NAME)
+//        FirebaseCrashlytics.getInstance().setCustomKey("OpenCV", org.opencv.BuildConfig.VERSION_NAME)
     }
 }

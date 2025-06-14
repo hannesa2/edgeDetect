@@ -30,7 +30,6 @@ class StartActivity : AppCompatActivity() {
 
         binding.textBuildType.text = "BuildType     : ${BuildConfig.BUILD_TYPE}"
         binding.textAppVersion.text = "App version   : ${BuildConfig.VERSION_NAME}"
-        binding.textOpenCVVersion.text = "OpenCV version: ${org.opencv.BuildConfig.VERSION_NAME}"
     }
 
 }
