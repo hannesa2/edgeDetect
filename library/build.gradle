@@ -1,11 +1,11 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'maven-publish'
+    id "com.android.library"
+    id "kotlin-android"
+    id "maven-publish"
 }
 
 android {
-    namespace 'info.hannes.edgedetection'
+    namespace "info.hannes.edgedetection"
 
     defaultConfig {
         minSdkVersion 21
@@ -16,7 +16,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
@@ -25,11 +25,11 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
     packagingOptions {
-        pickFirst 'META-INF/native-image/reflect-config.json'
-        pickFirst 'META-INF/native-image/resource-config.json'
+        pickFirst "META-INF/native-image/reflect-config.json"
+        pickFirst "META-INF/native-image/resource-config.json"
     }
     buildFeatures {
         viewBinding true
@@ -37,15 +37,15 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api 'com.github.MikeOrtiz:TouchImageView:3.6'
-    api 'com.github.AppDevNext.Logcat:LogcatCoreLib:3.3.1'
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    api "com.github.MikeOrtiz:TouchImageView:3.6"
+    api "com.github.AppDevNext.Logcat:LogcatCoreLib:3.3.1"
     api "org.opencv:opencv:4.11.0"
     implementation "androidx.core:core-ktx:1.16.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.itextpdf:itext7-core:9.1.0'
+    implementation "com.itextpdf:itext7-core:9.1.0"
 }
 
 publishing {

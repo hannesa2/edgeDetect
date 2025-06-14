@@ -1,7 +1,7 @@
 import org.gradle.internal.jvm.Jvm
 
 buildscript {
-    ext.kotlin_version = '2.1.10'
+    ext.kotlin_version = "2.1.10"
 
     repositories {
         google()
@@ -9,10 +9,10 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.10.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.google.gms:google-services:4.4.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.3'
+        classpath "com.android.tools.build:gradle:8.10.1"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
+        classpath "com.google.gms:google-services:4.4.2"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:3.0.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.2"
     }
@@ -30,11 +30,11 @@ subprojects {
 }
 
 allprojects {
-    group = 'info.hannes.edgedetection'
+    group = "info.hannes.edgedetection"
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -50,6 +50,6 @@ static def getTag() {
     return process.text.toString().trim()
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
