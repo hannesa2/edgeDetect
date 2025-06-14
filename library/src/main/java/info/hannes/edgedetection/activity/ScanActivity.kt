@@ -263,12 +263,11 @@ class ScanActivity : AppCompatActivity(), IScanner, View.OnClickListener {
     companion object {
         private const val PERMISSIONS_REQUEST_CAMERA = 101
         private const val PERMISSIONS_REQUEST_EXTERNAL_STORAGE = 102
-        private const val openCvLibrary = "opencv_java4"
 
         val allDraggedPointsStack = Stack<PolygonPoints>()
 
         init {
-            System.loadLibrary(openCvLibrary)
+            System.loadLibrary("opencv_java4")
         }
     }
 }
