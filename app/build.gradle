@@ -3,14 +3,14 @@ import org.gradle.internal.logging.text.StyledTextOutputFactory
 import static org.gradle.internal.logging.text.StyledTextOutput.Style
 
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-//    id 'com.google.gms.google-services'
-//    id 'com.google.firebase.crashlytics'
+    id "com.android.application"
+    id "kotlin-android"
+//    id "com.google.gms.google-services"
+//    id "com.google.firebase.crashlytics"
 }
 
 android {
-    namespace 'info.hannes.edgedetection.demo'
+    namespace "info.hannes.edgedetection.demo"
 
     defaultConfig {
         applicationId "info.hannes.edgedetection.demo"
@@ -20,8 +20,8 @@ android {
         versionCode getGitCommitCount()
         versionName getTag()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments useTestStorageService: 'true'
-        buildConfigField "String", 'GIT_REPOSITORY', "\"" + getGitOriginRemote() + "\""
+        testInstrumentationRunnerArguments useTestStorageService: "true"
+        buildConfigField "String", "GIT_REPOSITORY", "\"" + getGitOriginRemote() + "\""
     }
 
     buildFeatures {
@@ -33,7 +33,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
 
     signingConfigs {
@@ -51,7 +51,7 @@ android {
         } else if (System.getenv("TRAVIS")) {
             release {
                 out.style(Style.Normal).text("I run on TRAVIS")
-                storeFile file('../signing/release.keystore')
+                storeFile file("../signing/release.keystore")
                 storePassword System.getenv("KEYSTORE_PASS")
                 keyAlias System.getenv("ALIAS_NAME")
                 keyPassword System.getenv("ALIAS_PASS")
@@ -59,14 +59,14 @@ android {
         } else {
             release {
                 out.style(Style.Normal).text("I run on Github actions")
-                storeFile file('../signing/release.keystore')
+                storeFile file("../signing/release.keystore")
                 storePassword System.getenv("KEYSTORE_PASS")
                 keyAlias System.getenv("ALIAS_NAME")
                 keyPassword System.getenv("ALIAS_PASS")
             }
         }
         debugCI {
-            storeFile file('./debug.keystore')
+            storeFile file("./debug.keystore")
             storePassword "android"
             keyPassword "android"
             keyAlias "androiddebugkey"
@@ -80,7 +80,7 @@ android {
                 signingConfig signingConfigs.release
             }
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
         debug {
@@ -109,25 +109,25 @@ android {
     }
 
     packagingOptions {
-        pickFirst 'META-INF/native-image/reflect-config.json'
-        pickFirst 'META-INF/native-image/resource-config.json'
+        pickFirst "META-INF/native-image/reflect-config.json"
+        pickFirst "META-INF/native-image/resource-config.json"
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
+    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
 
-    implementation project(':library')
-    implementation 'com.github.AppDevNext.Logcat:LogcatCoreUI:3.3.1'
-    releaseImplementation 'com.github.AppDevNext.Logcat:LogcatCrashlyticLib:3.3.1'
-    implementation 'com.github.hannesa2:githubAppUpdate:2.3.1'
+    implementation project(":library")
+    implementation "com.github.AppDevNext.Logcat:LogcatCoreUI:3.3.1"
+    releaseImplementation "com.github.AppDevNext.Logcat:LogcatCrashlyticLib:3.3.1"
+    implementation "com.github.hannesa2:githubAppUpdate:2.3.1"
 
     implementation "androidx.core:core-ktx:1.16.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit-ktx:1.1.5"
     androidTestUtil "androidx.test.services:test-services:1.5.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
@@ -153,14 +153,14 @@ task decryptPrivate {
     def pass = "$System.env.CRYPT_PASS"
     if (pass.toString() == "null") {
         out.style(Style.Normal).text("In decrypt files the mandatory ")
-                .style(Style.Failure).println('CRYPT_PASS not set')
+                .style(Style.Failure).println("CRYPT_PASS not set")
                 .style(Style.Normal).println("  If you want use Firebase features, please set it with ")
                 .style(Style.SuccessHeader).println("  export CRYPT_PASS=<superSecret>")
         println ""
     } else {
         out.style(Style.Normal).text("decrypt files for ")
                 .style(Style.SuccessHeader).text(getTag() + "." + getGitCommitCount() + "." + getLatestGitHash())
-                .style(Style.Info).println(' DECRYPTED')
+                .style(Style.Info).println(" DECRYPTED")
         println ""
 
         def process = "pwd".execute()
@@ -175,4 +175,4 @@ task decryptPrivate {
 
 clean.dependsOn decryptPrivate
 
-//apply plugin: 'com.google.gms.google-services'
+//apply plugin: "com.google.gms.google-services"
