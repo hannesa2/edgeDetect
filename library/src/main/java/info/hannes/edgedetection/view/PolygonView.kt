@@ -18,7 +18,6 @@ import info.hannes.edgedetection.R
 import info.hannes.edgedetection.activity.ScanActivity
 import info.hannes.edgedetection.utils.dp2px
 import timber.log.Timber
-import java.util.*
 
 /**
  * This class defines polygon for cropping
@@ -135,12 +134,14 @@ class PolygonView : FrameLayout {
     }
 
     fun resetPoints(polygonPoints: PolygonPoints) {
-        Timber.v("""
+        Timber.v(
+            """
     P1:${pointer1.x},${pointer1.y}
     P2:${pointer2.x},${pointer2.y}
     P3:${pointer3.x},${pointer3.y}
     P4:${pointer4.x},${pointer4.y}
-    """.trimIndent())
+    """.trimIndent()
+        )
         pointer1.x = polygonPoints.topLeftPoint.x
         pointer1.y = polygonPoints.topLeftPoint.y
         pointer2.x = polygonPoints.topRightPoint.x
@@ -150,12 +151,14 @@ class PolygonView : FrameLayout {
         pointer4.x = polygonPoints.bottomRightPoint.x
         pointer4.y = polygonPoints.bottomRightPoint.y
         polygonView.invalidate()
-        Timber.v("""
+        Timber.v(
+            """
     P1:${pointer1.x},${pointer1.y}
     P2:${pointer2.x},${pointer2.y}
     P3:${pointer3.x},${pointer3.y}
     P4:${pointer4.x},${pointer4.y}
-    """.trimIndent())
+    """.trimIndent()
+        )
     }
 
     override fun dispatchDraw(canvas: Canvas) {
@@ -171,10 +174,34 @@ class PolygonView : FrameLayout {
         canvas.drawPath(path5, bgPaint)
         val path6 = drawOutBottomRect(canvas)
         canvas.drawPath(path6, bgPaint)
-        canvas.drawLine(pointer1.x + pointer1.width / 2, pointer1.y + pointer1.height / 2, pointer3.x + pointer3.width / 2, pointer3.y + pointer3.height / 2, paint)
-        canvas.drawLine(pointer1.x + pointer1.width / 2, pointer1.y + pointer1.height / 2, pointer2.x + pointer2.width / 2, pointer2.y + pointer2.height / 2, paint)
-        canvas.drawLine(pointer2.x + pointer2.width / 2, pointer2.y + pointer2.height / 2, pointer4.x + pointer4.width / 2, pointer4.y + pointer4.height / 2, paint)
-        canvas.drawLine(pointer3.x + pointer3.width / 2, pointer3.y + pointer3.height / 2, pointer4.x + pointer4.width / 2, pointer4.y + pointer4.height / 2, paint)
+        canvas.drawLine(
+            pointer1.x + pointer1.width / 2,
+            pointer1.y + pointer1.height / 2,
+            pointer3.x + pointer3.width / 2,
+            pointer3.y + pointer3.height / 2,
+            paint
+        )
+        canvas.drawLine(
+            pointer1.x + pointer1.width / 2,
+            pointer1.y + pointer1.height / 2,
+            pointer2.x + pointer2.width / 2,
+            pointer2.y + pointer2.height / 2,
+            paint
+        )
+        canvas.drawLine(
+            pointer2.x + pointer2.width / 2,
+            pointer2.y + pointer2.height / 2,
+            pointer4.x + pointer4.width / 2,
+            pointer4.y + pointer4.height / 2,
+            paint
+        )
+        canvas.drawLine(
+            pointer3.x + pointer3.width / 2,
+            pointer3.y + pointer3.height / 2,
+            pointer4.x + pointer4.width / 2,
+            pointer4.y + pointer4.height / 2,
+            paint
+        )
         midPointer13.x = pointer3.x - (pointer3.x - pointer1.x) / 2
         midPointer13.y = pointer3.y - (pointer3.y - pointer1.y) / 2
         midPointer24.x = pointer4.x - (pointer4.x - pointer2.x) / 2
@@ -296,11 +323,16 @@ class PolygonView : FrameLayout {
                         }
                     }
                 }
+
                 MotionEvent.ACTION_DOWN -> {
-                    ScanActivity.allDraggedPointsStack.push(PolygonPoints(PointF(pointer1.x, pointer1.y),
+                    ScanActivity.allDraggedPointsStack.push(
+                        PolygonPoints(
+                            PointF(pointer1.x, pointer1.y),
                             PointF(pointer2.x, pointer2.y),
                             PointF(pointer3.x, pointer3.y),
-                            PointF(pointer4.x, pointer4.y)))
+                            PointF(pointer4.x, pointer4.y)
+                        )
+                    )
                     downPoint.x = event.x
                     downPoint.y = event.y
                     startPoint = PointF(v.x, v.y)
@@ -308,6 +340,7 @@ class PolygonView : FrameLayout {
                     latestPoint1 = PointF(mainPointer1.x, mainPointer1.y)
                     latestPoint2 = PointF(mainPointer2.x, mainPointer2.y)
                 }
+
                 MotionEvent.ACTION_UP -> {
                     val color: Int
                     if (isValidShape(points) && isValidPointer1 && isValidPointer2 && isValidPointer3 && isValidPointer4) {
@@ -330,6 +363,7 @@ class PolygonView : FrameLayout {
                     }
                     paint.color = color
                 }
+
                 else -> {
                 }
             }
@@ -376,16 +410,22 @@ class PolygonView : FrameLayout {
                         startPoint = PointF(v.x, v.y)
                     }
                 }
+
                 MotionEvent.ACTION_DOWN -> {
-                    ScanActivity.allDraggedPointsStack.push(PolygonPoints(PointF(pointer1.x, pointer1.y),
+                    ScanActivity.allDraggedPointsStack.push(
+                        PolygonPoints(
+                            PointF(pointer1.x, pointer1.y),
                             PointF(pointer2.x, pointer2.y),
                             PointF(pointer3.x, pointer3.y),
-                            PointF(pointer4.x, pointer4.y)))
+                            PointF(pointer4.x, pointer4.y)
+                        )
+                    )
                     downPoint.x = event.x
                     downPoint.y = event.y
                     startPoint = PointF(v.x, v.y)
                     latestPoint = PointF(v.x, v.y)
                 }
+
                 MotionEvent.ACTION_UP -> {
                     val color: Int
                     if (isValidShape(points) && isValidPointer4 && isValidPointer3 && isValidPointer2 && isValidPointer1) {

@@ -15,7 +15,6 @@ import org.opencv.utils.Converters
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
-import java.util.*
 
 fun Bitmap.enhanceReceipt(topLeft: Point, topRight: Point, bottomLeft: Point, bottomRight: Point): Bitmap {
     var resultWidth = (topRight.x - topLeft.x).toInt()
@@ -190,4 +189,4 @@ fun Bitmap.saveToInternalMemory(fileDirectory: String, fileName: String, context
 }
 
 fun Bitmap.rotate(degrees: Float): Bitmap =
-        Bitmap.createBitmap(this, 0, 0, width, height, Matrix().apply { postRotate(degrees) }, true)
+    Bitmap.createBitmap(this, 0, 0, width, height, Matrix().apply { postRotate(degrees) }, true)

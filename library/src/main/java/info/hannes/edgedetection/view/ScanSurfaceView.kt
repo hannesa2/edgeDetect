@@ -2,21 +2,38 @@ package info.hannes.edgedetection.view
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.ImageFormat
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.drawable.shapes.PathShape
 import android.hardware.Camera
-import android.hardware.Camera.*
+import android.hardware.Camera.CameraInfo
+import android.hardware.Camera.Parameters
+import android.hardware.Camera.PictureCallback
+import android.hardware.Camera.PreviewCallback
+import android.hardware.Camera.ShutterCallback
+import android.hardware.Camera.getCameraInfo
+import android.hardware.Camera.getNumberOfCameras
+import android.hardware.Camera.open
 import android.media.AudioManager
 import android.os.CountDownTimer
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 import android.widget.FrameLayout
-import info.hannes.edgedetection.*
+import info.hannes.edgedetection.IScanner
+import info.hannes.edgedetection.ImageDetectionProperties
+import info.hannes.edgedetection.ScanConstants
+import info.hannes.edgedetection.ScanHint
 import info.hannes.edgedetection.utils.ScanUtils
 import info.hannes.edgedetection.utils.configureCameraAngle
 import info.hannes.edgedetection.utils.decodeBitmapFromByteArray
-import org.opencv.core.*
+import org.opencv.core.CvType
+import org.opencv.core.Mat
+import org.opencv.core.MatOfPoint2f
 import org.opencv.core.Point
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
@@ -28,7 +45,8 @@ import kotlin.math.abs
 /**
  * This class previews the live images from the camera
  */
-class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE) : FrameLayout(context), SurfaceHolder.Callback {
+class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL: Long = DEFAULT_TIME_POST_PICTURE) : FrameLayout(context),
+    SurfaceHolder.Callback {
 
     private var surfaceView: SurfaceView = SurfaceView(context)
     private val scanCanvasView: ScanCanvasView
@@ -94,8 +112,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
         if (vWidth == vHeight) {
             return
         }
-        if (previewSize == null)
-            previewSize = ScanUtils.getOptimalPreviewSize(camera, vWidth, vHeight)
+        if (previewSize == null) previewSize = ScanUtils.getOptimalPreviewSize(camera, vWidth, vHeight)
         val parameters = camera!!.parameters
         camera!!.setDisplayOrientation((context as Activity).configureCameraAngle())
         parameters.setPreviewSize(previewSize!!.width, previewSize!!.height)
@@ -192,8 +209,18 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
         val bottomWidth = points[2].y - points[1].y
         if (bottomWidth > resultWidth) resultWidth = bottomWidth
         Timber.v("resultWidth=$resultWidth resultHeight=$resultHeight")
-        val imgDetectionPropsObj = ImageDetectionProperties(previewWidth.toDouble(), previewHeight.toDouble(), resultWidth, resultHeight,
-                previewArea.toDouble(), area, points[0], points[1], points[2], points[3])
+        val imgDetectionPropsObj = ImageDetectionProperties(
+            previewWidth.toDouble(),
+            previewHeight.toDouble(),
+            resultWidth,
+            resultHeight,
+            previewArea.toDouble(),
+            area,
+            points[0],
+            points[1],
+            points[2],
+            points[3]
+        )
         val scanHint: ScanHint
         if (imgDetectionPropsObj.isDetectedAreaBeyondLimits) {
             scanHint = ScanHint.FIND_RECT
@@ -256,8 +283,7 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
     }
 
     private fun autoCapture(scanHint: ScanHint) {
-        if (isCapturing)
-            return
+        if (isCapturing) return
         cancelAutoCapture()
         if (ScanHint.CAPTURING_IMAGE == scanHint) {
             try {
@@ -295,14 +321,17 @@ class ScanSurfaceView(context: Context, iScanner: IScanner, val TIME_HOLD_STILL:
                 paintColor = Color.argb(30, 255, 38, 0)
                 borderColor = Color.rgb(255, 38, 0)
             }
+
             ScanHint.FIND_RECT -> {
                 paintColor = Color.argb(0, 0, 0, 0)
                 borderColor = Color.argb(0, 0, 0, 0)
             }
+
             ScanHint.CAPTURING_IMAGE -> {
                 paintColor = Color.argb(30, 38, 216, 76)
                 borderColor = Color.rgb(38, 216, 76)
             }
+
             ScanHint.NO_MESSAGE -> Unit
         }
         paint.color = paintColor

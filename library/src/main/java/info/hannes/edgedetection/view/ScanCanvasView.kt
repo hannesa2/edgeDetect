@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.drawable.shapes.Shape
 import android.util.AttributeSet
 import android.view.View
-import java.util.*
 
 /**
  * Draws an array of shapes on a canvas
