@@ -93,8 +93,8 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
             if (variant.name == "release") {
                 def builtType = variant.buildType.name
                 def vName = variant.versionName
@@ -147,7 +147,7 @@ static def getLatestGitHash() {
     return process.text.toString().trim()
 }
 
-task decryptPrivate {
+tasks.register('decryptPrivate') {
     def out = services.get(StyledTextOutputFactory).create("")
 
     def pass = "$System.env.CRYPT_PASS"
