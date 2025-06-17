@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import info.hannes.edgedetection.demo.databinding.ActivityStartBinding
 import info.hannes.logcat.ui.BothLogActivity
+import org.opencv.android.OpenCVLoader
 
 class StartActivity : AppCompatActivity() {
 
@@ -30,6 +31,7 @@ class StartActivity : AppCompatActivity() {
 
         binding.textBuildType.text = "BuildType     : ${BuildConfig.BUILD_TYPE}"
         binding.textAppVersion.text = "App version   : ${BuildConfig.VERSION_NAME}"
+        binding.textOpenCVVersion.text = "OpenCV version: ${OpenCVLoader.OPENCV_VERSION}"
     }
 
 }
