@@ -4,7 +4,7 @@ import android.Manifest
 import android.util.Log
 import androidx.test.core.app.takeScreenshot
 import androidx.test.core.graphics.writeToTestStorage
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.screenshot.captureToBitmap
 import androidx.test.ext.junit.rules.activityScenarioRule
@@ -39,7 +39,7 @@ class SmokeTest {
             takeScreenshot()
                 .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-S$i")
             try {
-                Espresso.onView(ViewMatchers.isRoot())
+                onView(ViewMatchers.isRoot())
                     .captureToBitmap()
                     .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-A$i")
             } catch (e: Exception) {
