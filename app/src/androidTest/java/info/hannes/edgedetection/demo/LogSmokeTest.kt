@@ -1,9 +1,10 @@
 package info.hannes.edgedetection.demo
 
+import android.graphics.Bitmap
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.screenshot.captureToBitmap
+import androidx.test.espresso.action.ViewActions.captureToBitmap
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import info.hannes.logcat.ui.BothLogActivity
@@ -26,9 +27,8 @@ class LogSmokeTest {
     fun smokeTestSimplyStart() {
         for (i in 500L..2000L step 500) {
             Thread.sleep(i)
-            onView(ViewMatchers.isRoot())
-                .captureToBitmap()
-                .writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-$i")
+            onView(isRoot())
+                .perform(captureToBitmap { bitmap: Bitmap -> bitmap.writeToTestStorage("${javaClass.simpleName}_${nameRule.methodName}-$i") })
         }
     }
 }
