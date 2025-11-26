@@ -12,13 +12,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macOS-13 ] # self-hosted,
+        os: [ ubuntu-24.04 ]
         java_version: [ 17 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: kvm support
+        run: |
+          egrep -c '(vmx|svm)' /proc/cpuinfo
+          id
+          sudo adduser $USER kvm
+          sudo chown -R $USER /dev/kvm
+          id
       - name: Install JDK ${{ matrix.java_version }}
         uses: actions/setup-java@v5
         with:
