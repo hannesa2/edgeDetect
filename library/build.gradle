@@ -8,7 +8,7 @@ android {
     namespace "info.hannes.edgedetection"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         compileSdk 35
         targetSdkVersion 35
     }
