@@ -22,7 +22,7 @@ class StartActivity : AppCompatActivity() {
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonScan.setOnClickListener { startActivity(Intent(this, PreviewActivity::class.java)) }
+        binding.buttonPreview.setOnClickListener { startActivity(Intent(this, PreviewActivity::class.java)) }
         binding.buttonLog.setOnClickListener { startActivity(Intent(this, BothLogActivity::class.java)) }
         binding.buttonCrash.setOnClickListener {
             Toast.makeText(this, "force crash ${info.hannes.logcat.BuildConfig.VERSIONNAME}", Toast.LENGTH_SHORT).show()
